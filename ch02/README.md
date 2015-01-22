@@ -5,7 +5,7 @@ a double?
 
 C++ guarantees `short` and `int` is **at least** 16 bits, `long` **at least** 32 bits, `long long` **at least** 64 bits.
 
-The `unsigned` and `signed` type have the **same size**. for example, sizeof(unsigned short) == sizeof(short).
+The `signed` can represent positive numbers, negative numbers and zero, while `unsigned` can only represent numbers no less than zero.
 
 The C and C++ standards do not specify the representation of float, double and long double.
 It is possible that all three implemented as IEEE double-precision.
@@ -362,12 +362,8 @@ if (*p) // whether the value pointed by p is zero?
 ##Exercise 2.23
 >Given a pointer p, can you determine whether p points to a valid object? If so, how? If not, why not?
 
-```cpp
-if (p)
-  // p points to a valid object
-else
-  // p points to a invalid object
-```
+No. Because more information needed to determine whether the pointee is valid or not.
+
 
 ##Exercise 2.24
 >Why is the initialization of p legal but that of lp illegal?
@@ -436,8 +432,8 @@ following assignments are legal? Explain why.
 i = ic;     // legal.
 p1 = p3;    // illegal. p3 is a pointer to const int.
 p1 = &ic;   // illegal. ic is a const int.
-p3 = &ic;   // legal.
-p2 = p1;    // legal.
+p3 = &ic;   // illegal. p3 is a const pointer.
+p2 = p1;    // illegal. p2 is a const pointer.
 ic = *p3;   // illegal. ic is a const int.
 ```
 

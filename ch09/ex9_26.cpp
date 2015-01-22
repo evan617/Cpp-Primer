@@ -1,72 +1,42 @@
-//! @Alan
+//!
+//! @author @huangjuncmj @Alan
+//! @date   19.11.2014
 //!
 //! Exercise 9.26:
 //! Using the following definition of ia, copy ia into a vector and into a list.
 //! Use the single-iterator form of erase to remove the elements with odd values from your
 //! list and the even values from your vector.
-//  note the subtle difference between list and vector.
 //!
 #include <iostream>
-#include <string>
 #include <vector>
-#include <deque>
 #include <list>
 
+using std::vector; using std::list; using std::cout; using std::endl; using std::end;
 
 int main()
 {
     int ia[] = { 0, 1, 1, 2, 3, 5, 8, 13, 21, 55, 89 };
 
-    //! cal the lenth of the array.
-    int size = sizeof(ia)/sizeof(int);
+    //! init
+    vector<int> vec(ia, end(ia));
+    list<int> lst(vec.begin(), vec.end());
 
-    std::vector<int> v;
-    std::list<int> l;
+    //! remove odd value
+    for(auto it = lst.begin();  it != lst.end(); )
+        if(*it & 0x1) it = lst.erase(it);
+        else ++it;
 
-    // copy in to v and l
-    for (auto *p = ia; p != ia + size ; ++p)
-    {
-        v.push_back(*p);
-        l.push_back(*p);
-    }
+    //! remove even value
+    for(auto it = vec.begin();  it != vec.end(); )
+        if(! *it & 0x1) it = vec.erase(it);
+        else ++it;
 
-    // ease even value element from v
-    for (auto it = v.begin(); it != v.end(); ++it)
-    {
-        if((*it)%2 == 0)
-        {
-            v.erase(it);
-        }
-    }
-    //print content of v
-    for(auto it = v.begin(); it != v.end(); ++it)
-    {
-        std::cout << *it <<" ";
-    }
-
-    std::cout << "\n";
-
-
-    //ease odd value element from l
-    for(auto it = l.begin(); it != l.end(); ++it)
-    {
-        if((*it)%2 == 1)
-        {
-            l.erase(it);
-
-            //! @note without this statement it does not work
-            --it;
-        }
-    }
-    //print l
-    for (auto it = l.begin(); it != l.end(); ++it)
-    {
-        std::cout << *it << " ";
-    }
-
-
-
-
+    //! print
+    cout << "list : ";
+    for(auto i : lst)   cout << i << " ";
+    cout << "\nvector : ";
+    for(auto i : vec)   cout << i << " ";
+    cout << std::endl;
 
     return 0;
 }
